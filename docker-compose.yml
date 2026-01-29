@@ -1,65 +1,65 @@
-# version: '3.9'
+  # version: '3.9'
 
-services:
-  postgres:
-    image: postgres:15-alpine
-    container_name: postgres
-    restart: unless-stopped
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB:-lmsdb}
-      POSTGRES_USER: ${POSTGRES_USER:-lmsuser}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+  services:
+    postgres:
+      image: postgres:15-alpine
+      container_name: postgres
+      restart: unless-stopped
+      environment:
+        POSTGRES_DB: ${POSTGRES_DB:-lmsdb}
+        POSTGRES_USER: ${POSTGRES_USER:-lmsuser}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
 
-  backend:
-    build: ./backend
-    container_name: backend
-    restart: unless-stopped
-    env_file: .env
-    environment:
-      POSTGRES_HOST: postgres
-      POSTGRES_DB: ${POSTGRES_DB:-lmsdb}
-      POSTGRES_USER: ${POSTGRES_USER:-lmsuser}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-    depends_on:
-      - postgres
-    volumes:
-      - ./backend/media:/app/media
-      - ./backend/staticfiles:/app/staticfiles
-      - ./backend/logs:/app/logs
+    backend:
+      build: ./backend
+      container_name: backend
+      restart: unless-stopped
+      env_file: .env
+      environment:
+        POSTGRES_HOST: postgres
+        POSTGRES_DB: ${POSTGRES_DB:-lmsdb}
+        POSTGRES_USER: ${POSTGRES_USER:-lmsuser}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      depends_on:
+        - postgres
+      volumes:
+        - ./backend/media:/app/media
+        - ./backend/staticfiles:/app/staticfiles
+        - ./backend/logs:/app/logs
 
-  react-admin:
-    build:
-      context: ./admin
-      args:
-        REACT_APP_API_URL: /api
-    container_name: react-admin
-    restart: unless-stopped
+    react-admin:
+      build:
+        context: ./admin
+        args:
+          REACT_APP_API_URL: /api
+      container_name: react-admin
+      restart: unless-stopped
 
-  react-student:
-    build:
-      context: ./student
-      args:
-        REACT_APP_API_URL: /api
-        PUBLIC_URL: /student
-    container_name: react-student
-    restart: unless-stopped
+    react-student:
+      build:
+        context: ./student
+        args:
+          REACT_APP_API_URL: /api
+          PUBLIC_URL: /student
+      container_name: react-student
+      restart: unless-stopped
 
-  nginx:
-    image: nginx:alpine
-    container_name: nginx
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d:ro
-      - ./nginx/certs:/etc/ssl/certs:ro
-    depends_on:
-      - react-admin
-      - react-student
-      - backend
+    nginx:
+      image: nginx:alpine
+      container_name: nginx
+      restart: unless-stopped
+      ports:
+        - "80:80"
+        - "443:443"
+      volumes:
+        - ./nginx/conf.d:/etc/nginx/conf.d:ro
+        - ./nginx/certs:/etc/ssl/certs:ro
+      depends_on:
+        - react-admin
+        - react-student
+        - backend
 
-volumes:
-  postgres_data:
+  volumes:
+    postgres_data:
