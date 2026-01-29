@@ -14,7 +14,10 @@ if SECRET_KEY == 'django-insecure-key-change-in-production':
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',')
+ALLOWED_HOSTS = config(
+    'ALLOWED_HOSTS',
+    default='student.mohamedghanem.cloud,mohamedghanem.cloud'
+).split(',')
 
 # CORS - Restrict to specific origins in production
 CORS_ALLOW_ALL_ORIGINS = False
