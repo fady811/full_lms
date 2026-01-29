@@ -1,81 +1,81 @@
-  # version: '3.9'
+# version: '3.9'
 
-  services:
-    postgres:
-      image: postgres:15-alpine
-      container_name: postgres
-      restart: unless-stopped
-      environment:
-        POSTGRES_DB: ${POSTGRES_DB:-lmsdb}
-        POSTGRES_USER: ${POSTGRES_USER:-lmsuser}
-        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-      volumes:
-        - postgres_data:/var/lib/postgresql/data
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-lmsdb}
+      POSTGRES_USER: ${POSTGRES_USER:-lmsuser}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
-    backend:
-      build: ./backend
-      container_name: backend
-      restart: unless-stopped
-      env_file: .env
-      environment:
-        POSTGRES_HOST: postgres
-        POSTGRES_DB: ${POSTGRES_DB:-lmsdb}
-        POSTGRES_USER: ${POSTGRES_USER:-lmsuser}
-        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-      depends_on:
-        - postgres
-      ports:
-        - "8000:8000"
-      volumes:
-        - ./backend/media:/app/media
-        - ./backend/staticfiles:/app/staticfiles
-        - ./backend/logs:/app/logs
+  backend:
+    build: ./backend
+    container_name: backend
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_DB: ${POSTGRES_DB:-lmsdb}
+      POSTGRES_USER: ${POSTGRES_USER:-lmsuser}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+    depends_on:
+      - postgres
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/media:/app/media
+      - ./backend/staticfiles:/app/staticfiles
+      - ./backend/logs:/app/logs
 
-    react-admin:
-      build:
-        context: ./admin
-        args:
-          REACT_APP_API_URL: /api
-      container_name: react-admin
-      restart: unless-stopped
-      ports:
-        - "3001:80" # optional direct access for testing (admin)
-      networks:
-        - lms_net
+  react-admin:
+    build:
+      context: ./admin
+      args:
+        REACT_APP_API_URL: "http://72.62.232.8:8000/api"
+    container_name: react-admin
+    restart: unless-stopped
+    ports:
+      - "3001:80"
+    networks:
+      - lms_net
 
-    react-student:
-      build:
-        context: ./student
-        args:
-          REACT_APP_API_URL: /api
-          PUBLIC_URL: /student
-      container_name: react-student
-      restart: unless-stopped
-      ports:
-        - "3002:80" # optional direct access for testing (student)
-      networks:
-        - lms_net
+  react-student:
+    build:
+      context: ./student
+      args:
+        REACT_APP_API_URL: "http://72.62.232.8:8000/api"
+        PUBLIC_URL: /student
+    container_name: react-student
+    restart: unless-stopped
+    ports:
+      - "3002:80"
+    networks:
+      - lms_net
 
-    nginx:
-      image: nginx:alpine
-      container_name: nginx
-      restart: unless-stopped
-      ports:
-        - "80:80"
-      volumes:
-        - ./nginx/conf.d:/etc/nginx/conf.d:ro
-        - ./nginx/certs:/etc/ssl/certs:ro
-        - ./backend/staticfiles:/usr/share/nginx/html/static:ro
-        - ./backend/media:/usr/share/nginx/html/media:ro
-      depends_on:
-        - react-admin
-        - react-student
-        - backend
-      networks:
-        - lms_net
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/certs:/etc/ssl/certs:ro
+      - ./backend/media:/usr/share/nginx/html/media:ro
+    depends_on:
+      - react-admin
+      - react-student
+      - backend
+    networks:
+      - lms_net
 
-  volumes:
-    postgres_data:
+volumes:
+  postgres_data:
+
 networks:
   lms_net:
     driver: bridge
