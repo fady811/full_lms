@@ -24,6 +24,8 @@
         POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
       depends_on:
         - postgres
+      ports:
+        - "8000:8000"
       volumes:
         - ./backend/media:/app/media
         - ./backend/staticfiles:/app/staticfiles
@@ -36,6 +38,10 @@
           REACT_APP_API_URL: /api
       container_name: react-admin
       restart: unless-stopped
+      ports:
+        - "3001:80" # optional direct access for testing (admin)
+      networks:
+        - lms_net
 
     react-student:
       build:
@@ -45,6 +51,10 @@
           PUBLIC_URL: /student
       container_name: react-student
       restart: unless-stopped
+      ports:
+        - "3002:80" # optional direct access for testing (student)
+      networks:
+        - lms_net
 
     nginx:
       image: nginx:alpine
@@ -52,14 +62,20 @@
       restart: unless-stopped
       ports:
         - "80:80"
-        - "443:443"
       volumes:
         - ./nginx/conf.d:/etc/nginx/conf.d:ro
         - ./nginx/certs:/etc/ssl/certs:ro
+        - ./backend/staticfiles:/usr/share/nginx/html/static:ro
+        - ./backend/media:/usr/share/nginx/html/media:ro
       depends_on:
         - react-admin
         - react-student
         - backend
+      networks:
+        - lms_net
 
   volumes:
     postgres_data:
+networks:
+  lms_net:
+    driver: bridge
