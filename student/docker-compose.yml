@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  react_app_prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_API_URL: ${REACT_APP_API_URL:-http://72.62.232.8/}
+    container_name: react_app_prod
+    image: react_app_prod:latest
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    networks:
+      - react_app_network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+networks:
+  react_app_network:
+    driver: bridge
+    name: react_app_network

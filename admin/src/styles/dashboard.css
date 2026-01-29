@@ -1,0 +1,371 @@
+/* src/styles/dashboard.css */
+.main-content {
+    margin-top: 20 !important;
+    padding-top: 0 !important;
+}
+
+.sidebar-collapsed .main-content {
+    margin-right: 80px;
+}
+
+.card {
+    border: none;
+    border-radius: 0.75rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.bg-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.bg-badge .icon {
+    font-size: 1.25rem;
+}
+
+.card-course {
+    border: 1px solid #e9ecef;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.card-course:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-title-course {
+    font-size: 1.1rem;
+    color: #343a40;
+    min-height: 56px;
+}
+
+.card-description {
+    font-size: 0.9rem;
+    color: #6c757d;
+    min-height: 72px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+/* =================== Dark Mode Styles =================== */
+.dark-mode {
+    --bg-primary: #1a1a2e;
+    --bg-secondary: #16213e;
+    --bg-tertiary: #0f3460;
+    --text-primary: #ffffff;
+    --text-secondary: #e6e6e6;
+    --text-muted: #b0b0b0;
+    --border-color: #0f3460;
+    --accent-color: #4CACB7;
+}
+
+.dark-mode .main-content {
+    background-color: var(--bg-primary);
+    color: var(--text-secondary);
+}
+
+.dark-mode .card {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-secondary) !important;
+    border-color: var(--border-color) !important;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .card-title-course {
+    color: var(--text-primary) !important;
+}
+
+.dark-mode .card-description {
+    color: var(--text-muted) !important;
+}
+
+.dark-mode .card .text-muted {
+    color: var(--text-muted) !important;
+}
+
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode h6 {
+    color: var(--text-primary) !important;
+}
+
+.dark-mode p {
+    color: var(--text-secondary) !important;
+}
+
+.dark-mode .small {
+    color: var(--text-muted) !important;
+}
+
+.dark-mode .bg-badge {
+    background: linear-gradient(135deg, var(--accent-color) 0%, #0f3460 100%);
+}
+
+.dark-mode .card-course {
+    border-color: var(--border-color) !important;
+    background-color: var(--bg-secondary) !important;
+}
+
+.dark-mode .chart-container {
+    background-color: var(--bg-secondary) !important;
+    border-color: var(--border-color) !important;
+}
+
+.dark-mode .btn {
+    color: var(--text-primary) !important;
+}
+
+.dark-mode .btn-primary {
+    background-color: var(--bg-tertiary) !important;
+    border-color: var(--bg-tertiary) !important;
+}
+
+.dark-mode .btn-outline-primary {
+    color: var(--accent-color) !important;
+    border-color: var(--accent-color) !important;
+}
+
+.dark-mode .btn-outline-primary:hover {
+    background-color: var(--accent-color) !important;
+    color: var(--text-primary) !important;
+}
+
+.dark-mode .text-primary {
+    color: var(--accent-color) !important;
+}
+
+.dark-mode a:not(.btn):not(.nav-link):not(.dropdown-item) {
+    color: var(--accent-color) !important;
+}
+
+.dark-mode a:not(.btn):not(.nav-link):not(.dropdown-item):hover {
+    color: #6bc5d1 !important;
+}
+
+/* Sidebar في Dark Mode */
+.dark-mode.sidebar {
+    background-color: var(--bg-tertiary) !important;
+}
+
+.dark-mode.sidebar .nav-link {
+    color: var(--text-secondary) !important;
+}
+
+.dark-mode.sidebar .nav-link:hover {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+}
+
+.dark-mode.sidebar .nav-link.active {
+    background-color: var(--accent-color) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Footer في Dark Mode */
+.dark-mode.footer {
+    background-color: #0a2647 !important;
+}
+
+.dark-mode.footer .socials a {
+    color: var(--text-muted) !important;
+}
+
+.dark-mode.footer .socials a:hover {
+    color: var(--text-primary) !important;
+}
+
+.dark-mode.footer a {
+    color: var(--text-muted) !important;
+}
+
+.dark-mode.footer a:hover {
+    color: var(--text-primary) !important;
+}
+
+.dark-mode.footer .smallText {
+    color: var(--text-secondary) !important;
+}
+
+.dark-mode .linkFooter {
+    border-top-color: var(--border-color) !important;
+}
+
+/* التأكد من وضوح النصوص */
+.dark-mode * {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* =================== Responsive =================== */
+/* استعلامات وسائط للشاشات الصغيرة */
+@media (max-width: 1200px) {
+    .main-content {
+        margin-right: 240px;
+    }
+    
+    .sidebar-collapsed .main-content {
+        margin-right: 70px;
+    }
+}
+
+@media (max-width: 992px) {
+    .main-content {
+        margin-right: 200px;
+    }
+    
+    .sidebar-collapsed .main-content {
+        margin-right: 60px;
+    }
+    
+    .card-img-top {
+        height: 180px;
+    }
+    
+    .card-title-course {
+        min-height: 50px;
+    }
+    
+    .card-description {
+        min-height: 65px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-top: 70px;
+        margin-right: 0;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    .sidebar-collapsed .main-content {
+        margin-right: 0;
+    }
+    
+    .card {
+        margin-bottom: 1rem;
+    }
+    
+    .card-img-top {
+        height: 160px;
+    }
+    
+    .card-title-course {
+        font-size: 1rem;
+        min-height: auto;
+    }
+    
+    .card-description {
+        font-size: 0.85rem;
+        min-height: auto;
+        -webkit-line-clamp: 2;
+    }
+    
+    .bg-badge {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .bg-badge .icon {
+        font-size: 1rem;
+    }
+    
+    /* Dark Mode Mobile */
+    .dark-mode .main-content {
+        background-color: var(--bg-primary);
+    }
+}
+
+@media (max-width: 576px) {
+    .main-content {
+        margin-top: 65px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    .card {
+        border-radius: 0.5rem;
+    }
+    
+    .card-course {
+        border-radius: 0.5rem;
+    }
+    
+    .card-img-top {
+        height: 140px;
+    }
+    
+    .card-title-course {
+        font-size: 0.95rem;
+    }
+    
+    .card-description {
+        font-size: 0.8rem;
+        -webkit-line-clamp: 2;
+    }
+    
+    .bg-badge {
+        width: 35px;
+        height: 35px;
+        border-radius: 8px;
+    }
+    
+    /* Dark Mode Small Mobile */
+    .dark-mode .card-img-top {
+        opacity: 0.9;
+    }
+}
+
+/* إضافات للشاشات الصغيرة جداً */
+@media (max-width: 400px) {
+    .main-content {
+        margin-top: 60px;
+    }
+    
+    .card-img-top {
+        height: 120px;
+    }
+    
+    .card-title-course {
+        font-size: 0.9rem;
+    }
+    
+    .card-description {
+        -webkit-line-clamp: 2;
+        font-size: 0.75rem;
+    }
+    
+    .bg-badge {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .bg-badge .icon {
+        font-size: 0.85rem;
+    }
+}
