@@ -11,6 +11,8 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - lms_net
 
   backend:
     build: ./backend
@@ -30,6 +32,8 @@ services:
       - ./backend/media:/app/media
       - ./backend/staticfiles:/app/staticfiles
       - ./backend/logs:/app/logs
+    networks:
+      - lms_net
 
   react-admin:
     build:
@@ -38,8 +42,6 @@ services:
         REACT_APP_API_URL: "http://72.62.232.8:8000/api"
     container_name: react-admin
     restart: unless-stopped
-    ports:
-      - "3001:80"
     networks:
       - lms_net
 
@@ -51,8 +53,6 @@ services:
         PUBLIC_URL: /student
     container_name: react-student
     restart: unless-stopped
-    ports:
-      - "3002:80"
     networks:
       - lms_net
 

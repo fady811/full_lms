@@ -1,0 +1,19 @@
+.env
+backend/.env
+student/.env
+nginx/certs/
+
+# Python
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
+build/
+
+# Docker
+docker-compose.override.yml
+
+# Editor
+.vscode/
+*.swp
